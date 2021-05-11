@@ -56,9 +56,9 @@
     justify-content: center;
     background: var(--black);
 }
-.open-menu-icon,.close-menu-icon{
+/* .open-menu-icon,.close-menu-icon{
     display: none;
-}
+} */
 .nav-logo img{
     width: 12em;
 }
@@ -125,11 +125,11 @@
     border-bottom: 3px solid var(--green);
     padding-bottom: 3px;
 }
-.container-sobre{
+.container-homesobre{
     background-image: url(../imgs/bg_home_about2.png); 
     background-size: cover;
 }
-.content-sobre {
+.content-homesobre {
     display: grid;
     grid-template-columns: 1fr 1fr;
     place-items: center;
