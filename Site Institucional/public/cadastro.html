@@ -18,34 +18,63 @@
             <figure>
                 <a href="index.html"><img src="svg/short-logo-soft.svg" alt=""></a>
             </figure>
+            <form id="form_cadastro" method="post" onsubmit="return cadastrar()">
             <section class="container-cadastro-input">
                 <div class="container-input">
                     <div class="inputs-form">
                         <label for="">Nome:</label>
-                        <input class="inputs-template input-nome" type="text" placeholder="Fulano">
+                        <input id="ipt_name_register" name="nome" class="inputs-template input-nome" type="text" placeholder="Fulano">
                     </div>
                     <div class="inputs-form">
                         <label for="">Sobrenome:</label>
-                        <input class="inputs-template input-nome" type="text" placeholder="Silva">
+                        <input id="ipt_lastname_register" name="sobrenome" class="inputs-template input-nome" type="text" placeholder="Silva">
                     </div>
                 </div>
 
                 <div class="div-cadastro-bottom">
                     <div class="inputs-form">
                         <label for="">E-mail:</label>
-                        <input class="inputs-template" type="text" placeholder="Digite seu e-mail">
+                        <input id="ipt_email_register" name="email" class="inputs-template" type="text" placeholder="Digite seu e-mail">
+                    </div>
+                    <div class="inputs-form">
+                        <label for="">Login:</label>
+                        <input id="ipt_usuario_register" name="login" class="inputs-template" type="text" placeholder="Digite seu login">
                     </div>
                     <div class="inputs-form">
                         <label for="">Senha:</label>
-                        <input class="inputs-template" type="text" placeholder="Digite sua senha">
+                        <input id="ipt_senha_register" name="senha" class="inputs-template" type="text" placeholder="Digite sua senha">
                     </div>
                 </div>
             </section>
             <div class="div-btn">
                 <span class="span-btn">Já é registrado? <a href="login.html"><b>Entrar</b></a></span>
-                <button class="btn2 btn-registrar">Registrar</button>
+                <button id="btn_entrar" class="btn2 btn-registrar" type="submit">Registrar</button>
             </div>
+        </form>
         </section>
     </section>
 </body>
 </html>
+
+<script>
+    // FUNCÃO CADASTRAR API 
+
+function cadastrar() {
+        var formulario = new URLSearchParams(new FormData(form_cadastro));
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            body: formulario
+        }).then(function (response) {
+            
+            if (response.ok) {
+
+                window.location.href='login.html';
+
+            } else {
+                console.log('Erro de cadastro!');
+            }
+        });
+
+        return false;
+    }
+</script>

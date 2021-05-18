@@ -17,21 +17,50 @@
                 <a href="index.html"><img src="svg/short-logo-soft.svg" alt=""></a>
             </figure>
             <div class="inputs-nome-sobrenome">
+                <form id="form_login" method="post" onsubmit="return entrar()">
                 <div class="inputs-form">
-                    <label for="">E-mail:</label>
-                    <input class="inputs-template input-login" type="text" placeholder="Digite seu e-mail">
+                    <label for="">Login:</label>
+                    <input id="ipt_usuario_login" name="login" class="inputs-template input-login" type="text" placeholder="Digite seu login">
                 </div>
                 <div class="inputs-form">
                     <label for="">Senha: <span class="">Esqueceu sua senha?</span></label>
-                    <input class="inputs-template input-login" type="text" placeholder="Digite sua senha">
+                    <input id="ipt_senha_login" name="senha" class="inputs-template input-login" type="text" placeholder="Digite sua senha">
                 </div>
                 <div class="div-btn">
                     <span class="span-btn">Não possuí registro? <a href="cadastro.html"><b>Cadastre-se</b></a></span>
-                    <button class="btn2 btn-login">Entrar</button>
+                    <button id="btn_entrar" class="btn2 btn-login">Entrar</button>
                 </div>
+                </form>
             </div>
         </div>
     </section>
 </body>
-
 </html>
+
+<script>
+// FUNCÃO ENTRAR API 
+
+function entrar() {
+        var formulario = new URLSearchParams(new FormData(form_login));
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            body: formulario
+        }).then(resposta => {
+
+            if (resposta.ok) {
+
+                resposta.json().then(json => {
+
+                    sessionStorage.login_usuario_meuapp = json.login;
+                    sessionStorage.nome_usuario_meuapp = json.nome;
+
+                    window.location.href = 'dashboard.html';
+                });
+
+            } else {
+                console.log('Erro de login!');
+            }
+        });
+        return false;
+    }
+</script>
