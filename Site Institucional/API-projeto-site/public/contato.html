@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/child.css">
+    <link rel="stylesheet" href="css/aplicacao.css">
+    <link rel="shortcut icon" href="svg/shortcut-logo.svg" type="image/x-icon">
+    <title>Contato | Techno Spot | Inc</title>
+</head>
+
+<body class="body-contato">
+    <!-- Header -->
+    <header class="header-nav">
+        <nav class="nav">
+            <!-- Hamburguer Menu Mobile -->
+            <!--             <div class="open-menu-icon" id="open_menu_icon" onclick="open_itens_menu()">
+                <svg fill="#FFF" viewBox="0 0 512 512" width="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z" />
+                </svg>
+            </div> -->
+            <!-- Fechar Menu Mobile -->
+            <!--             <div class="close-menu-icon" id="close_menu_icon" onclick="close_itens_menu()">
+                <svg fill="#FFF" viewBox="0 0 512 512" width="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z" />
+                </svg>
+            </div> -->
+            <!-- Fim Hamburguer Menu Mobile -->
+
+            <!-- Logo Menu -->
+            <div class="nav-logo">
+                <a href="index.html"><img src="svg/logo.svg" alt="Logo"></a>
+            </div>
+            <!-- Fim Logo Menu -->
+            <!-- Itens Menu -->
+            <ul id="itens_menu">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="sobre.html">SOBRE</a></li>
+                <li><a href="contato.html">CONTATO</a></li>
+            </ul>
+            <!-- Fim Itens Menu -->
+            <!-- Botão Login -->
+            <div class="nav-btn" href="#">
+                <a class="btn btn-nav" href="login.html">LOGIN</a>
+            </div>
+            <!-- Fim Botão Login -->
+        </nav>
+    </header>
+    <!-- Fim Header -->
+    <section class="container-contato">
+        <section class="content-contato">
+            <div>
+                <h1>CONT<span class="border-h1-bottom">ATO</span></h1>
+            </div>
+                <form class="inputs-contato" id="form_contato" method="post" onsubmit="return contato()"> 
+                    <section>
+                        <div class="inputs-form">
+                            <label for="">Nome completo:</label>
+                            <input class="inputs-template input-nome"  name="nomeContato"type="text" placeholder="Fulano Silva">
+                        </div>
+                        <div class="inputs-form">
+                            <label for="">E-mail:</label>
+                            <input class="inputs-template input-nome" name="emailContato" type="text" placeholder="Digite seu e-mail">
+                        </div>
+                        <div class="inputs-form">
+                            <label for="">Telefone:</label>
+                            <input class="inputs-template input-nome" name="telefoneContato" type="text" placeholder="Digite seu telefone">
+                        </div>
+                        <div class="div-but">
+                            <button class="btn btn-form" type="submit">ENVIAR</button>
+                        </div>
+                    </section>
+                    <div class="inputs-form">
+                        <label for="">Mensagem:</label>
+                        <textarea id="" cols="30" rows="10" name="mensagem" ></textarea>
+                    </div>
+             </form> 
+        </section>
+    </section>
+    <footer class="footer">
+        <div class="container-footer">
+            <!-- Texto Rodapé -->
+            <article class="footer-about">
+                <a href="index.html"><img src="svg/logo.svg" alt="Logo"></a>
+                <p>Fundada com o intuito de
+                    difundirmos a tecnologia em todos os
+                    meios possíveis enquanto auxiliamos um
+                    setor tão importante para o Brasil</p>
+            </article>
+            <!-- Fim Rodapé -->
+            <!-- Itens Rodapé -->
+            <div class="nav-footer">
+                <ul>
+                    <li class="footer-title"><a href="servico.html">HOME</a></li>
+                    <li><a href="servico.html">Principal</a></li>
+                </ul>
+                <ul>
+                    <li class="footer-title"><a href="sobrenos.html">SOBRE</a></li>
+                    <li><a href="sobrenos.html">História</a></li>
+                </ul>
+                <ul>
+                    <li class="footer-title"><a href="contato.html">CONTATO</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </div>
+            <!-- Fim Itens Rodapé -->
+            <div class="nav-btn" href="#">
+                <a class="btn btn-nav" href="login.html">SUBSTITUIR</a>
+            </div>
+        </div>
+        <!-- Texto Copyright -->
+        <div class="copyright">
+            <span>© 2021 Techno Spot</span>
+        </div>
+        <!-- Fim Texto Copyright -->
+    </footer>
+    <!-- Fim Rodapé -->
+</body>
+
+</html>
+
+<script>
+    // FUNCÃO CONTATO API 
+
+function contato() {
+        var formulario_contato = new URLSearchParams(new FormData(form_contato));
+        fetch("/usuarios/contato", {
+            method: "POST",
+            body: formulario_contato
+        }).then(function (response) {
+            
+            if (response.ok) {
+
+                alert('Teste');
+
+            } else {
+                console.log('Erro de cadastro!');
+            }
+        });
+
+        return false;
+    }
+</script>

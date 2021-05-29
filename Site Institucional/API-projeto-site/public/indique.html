@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indique | Techno Spot | Inc</title>
+    <link rel="shortcut icon" href="svg/shortcut-logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="css/aplicacao.css">
+    <script type="text/javascript" src="funcoes.js"></script>
+</head>
+<body style="background: var(--softblack);">
+    <!-- Menu Lateral -->
+    <section class="navbar-vertical">
+        <!-- Logo Menu -->
+        <div class="navbar-logo">
+            <img src="svg/short-logo-soft.svg" alt="Logotipo Dragon Fruit">
+        </div>
+        <!-- Nav -->
+        <nav class="nav-vertical">
+            <ul>
+                <a href="comunidade.html" class="nav-link active">
+                    <i class="bi bi-speedometer2 nav-links-icon"></i>
+                    <span class="nav-links-name active-span">Listas</span>
+                </a>
+                <a href="indique.html" class="nav-link">
+                    <i class="bi bi-bar-chart-line nav-links-icon"></i>
+                    <span class="nav-links-name">Indique</span>
+                </a>
+            </ul>
+            <a href="login.html" class="nav-link">
+                <i class="bi bi-box-arrow-left"></i>
+                <span class="nav-links-name">Encerrar</span>
+            </a>
+        </nav>
+    </section>
+    <section class="container-indique">
+        <div class="content-indique">
+            <h3>Olá, <b id="b_usuario"></b></h3>
+            <form id="form_publicar" method="post" onsubmit="return publicar()">
+                <div class="inputs-form">
+                    <label for="">Nome do artista:</label>
+                    <input id="ipt_usuario_login" name="nomeArtista" class="inputs-template input-login" type="text"
+                        placeholder="Digite o nome">
+                </div>
+                <div class="inputs-form">
+                    <label for="">Nome da música:</label>
+                    <input id="ipt_senha_login" name="nomeMusica" class="inputs-template input-login" type="text"
+                        placeholder="Digite a música">
+                </div>
+                <div class="div-btn">
+                    <span class="span-btn"><a
+                            href="cadastro.html"></a></span>
+                    <button id="btn_publicar" class="btn2 btn-login">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</body>
+</html>
+
+<script>
+    function publicar() {
+        console.log("entrei!")
+        var formulario = new URLSearchParams(new FormData(form_publicar));
+        var idUsuario = sessionStorage.id_usuario_meuapp;
+        fetch(`/publicacoes/publicar/${idUsuario}`, {
+            method: "POST",
+            body: formulario
+        }).then(resposta => {
+
+            if (resposta.ok) {
+                obterPublicacoes();
+            } else {
+                console.log('Erro ao publicar!');
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+        });
+
+        return false;
+    }
+
+
+    function obterPublicacoes() {
+        fetch("/publicacoes")
+        .then(resposta => {
+            if (resposta.ok) {
+                resposta.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+        .catch(function (error) {
+            console.error(`Erro na obtenção das publicações: ${error.message}`);
+        });
+    }
+
+    function obterPublicacoesPorUsuario(idUsuario) {
+        fetch(`/publicacoes/${idUsuario}`)
+        .then(resposta => {
+            if (resposta.ok) {
+                resposta.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    // alert(JSON.stringify(resposta))
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+        .catch(function (error) {
+            console.error(`Erro na obtenção das publicações do usuário: ${error.message}`);
+        });
+    }
+
+    verificar_autenticacao();
+</script>

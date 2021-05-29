@@ -1,0 +1,120 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+body, html {
+    height: 100%;
+}
+
+.container-contato{
+    background-image: url(../imgs/bg-contato.png);
+    background-size: cover;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.content-contato{
+    padding-top: 100px; 
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--white);
+}
+.inputs-contato{
+    display: grid;
+    grid-template-columns: repeat(2, 19em);
+    grid-gap: 3em 5em;
+    padding: 2em;
+}
+textarea {
+    color: var(--white);
+    border: 1.5px solid var(--green);
+    border-radius: 15px;
+    font-size: 1em;
+    outline: none;
+    background: transparent;
+    padding: 1em 2em 6.5em 1em;
+}
+.content-contato h1{
+    font-size: 40px;
+    font-family: 'Krona One', sans-serif;
+}
+.content-contato span{
+    font-size: 40px;
+    font-family: 'Krona One', sans-serif;
+}
+.div-but{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.btn-form{
+    letter-spacing: 0.5px;
+    padding: 10px 30px;
+}
+
+/* SOBRE */
+
+.container-sobre{
+    background-image: url(../imgs/bg-sobre.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    justify-content: center;
+    padding: 8em 0 0 4em;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.content-sobre{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    color: white;
+}
+.content-sobre h1{
+    font-size: 40px;
+    font-family: 'Krona One', sans-serif;
+}
+.img-sobre img{
+    width: 400px;
+}
+.section-about-mvv {
+    display: grid;
+    grid-template-columns: repeat(3, 15em);
+    grid-gap: 4em;
+    padding-top: 2em;
+    padding-bottom: 6em;
+}
+.content-mmv{
+    display: grid;
+    grid-gap: 1em;
+    grid-template-rows: 6em 10em;
+}
+.section-about-mvv figure{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-about-mvv img{
+    width: 70px;
+}
+.section-about-mvv article{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.section-about-mvv h1{
+  font-size: 1.1em;
+  font-weight: 500;
+}
+.section-about-mvv p{
+    font-size: 0.8em;
+    font-weight: 300;
+    padding-top: 0.25em;
+    letter-spacing: 0.5px;
+    line-height: 25px;
+  }
+

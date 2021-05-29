@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/aplicacao.css">
+    <link rel="shortcut icon" href="svg/shortcut-logo.svg" type="image/x-icon">
+    <title>Login | Techno Spot | Inc</title>
+</head>
+
+<body class="body-login">
+    <section class="container-login">
+        <div class="content-login">
+            <figure>
+                <a href="index.html"><img src="svg/short-logo-soft.svg" alt=""></a>
+            </figure>
+            <div class="inputs-nome-sobrenome">
+                <form id="form_login" method="post" onsubmit="return entrar()">
+                    <div class="inputs-form">
+                        <label for="">Login:</label>
+                        <input id="ipt_usuario_login" name="login" class="inputs-template input-login" type="text"
+                            placeholder="Digite seu login">
+                    </div>
+                    <div class="inputs-form">
+                        <label for="">Senha: <span class="">Esqueceu sua senha?</span></label>
+                        <input id="ipt_senha_login" name="senha" class="inputs-template input-login" type="text"
+                            placeholder="Digite sua senha">
+                    </div>
+                    <div class="div-btn">
+                        <span class="span-btn">Não possuí registro? <a
+                                href="cadastro.html"><b>Cadastre-se</b></a></span>
+                        <button id="btn_entrar" class="btn2 btn-login">Entrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
+
+<script>
+    // FUNCÃO ENTRAR API 
+
+    function entrar() {
+        var formulario = new URLSearchParams(new FormData(form_login));
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            body: formulario
+        }).then(resposta => {
+
+            if (resposta.ok) {
+
+                resposta.json().then(json => {
+
+                    sessionStorage.login_usuario_meuapp = json.login;
+                    sessionStorage.nome_usuario_meuapp = json.nome;
+                    sessionStorage.id_usuario_meuapp = json.idUsuario;
+                    
+                    window.location.href = 'comunidade.html';
+                });
+
+            } else {
+                console.log('Erro de login!');
+            }
+        });
+        return false;
+    }
+</script>
