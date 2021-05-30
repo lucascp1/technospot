@@ -92,7 +92,8 @@
     padding: 2em 2em;
 }
 .input-login{
-    padding: 1em 14em 1em 2.4em;
+    padding: 1em 1em 1em 1em;
+    width: 28em;
 }  
 .div-btn{
     padding: 1.5em 1em;
@@ -214,7 +215,7 @@ a{
 
 
 
-/* APLICAÇÃO */
+/* COMUNIDADE */
 .container-comunidade{
     display: flex;
     flex-direction: column;
@@ -222,11 +223,10 @@ a{
 }
 .content-comunidade{
     background-color: var(--softblack);
-    height: 600px;
-    width: 1300px;
+    width: 70vw;
     border: 2px solid var(--green);
     border-radius: 30px;
-    margin-top: 2em;
+    margin-top: 1em;
     padding: 2em 2em;
 }
 .div-musicas span{
@@ -240,17 +240,43 @@ a{
     width: 100%;
     padding-top: 35px;
 }
-.first-div{
-    padding-top: 10px;
+.nome-comunidade {
+    padding-right: 1em;
+    padding-top: 0.25em;
 }
-.bd-green{border-bottom: 2px solid var(--green);}
-.bd-white{border-bottom: 2px solid var(--white);}
+.nome{
+    border-bottom: 2px solid #475050;
+    padding: 0.5em 0.5em;
+    margin: 0.5em 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+.teste {
+    color: var(--green);
+    font-size: 20px;
+    font-weight: 400;
+}
 .input-comunidade{
     padding: 15px 50px;
     border-radius: 50px;
 }
-
-/* FIM APLICAÇÃO */
+select{
+    background: var(--softblack);
+    border: 1px solid var(--green);
+    border-radius: 10px;
+    padding: 0.5em;
+    color: var(--white);
+    outline: none;
+    transition: border 0.25s ease-in;
+}
+.content-select{
+    width: 70vw;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0 2.7em;
+    justify-content: space-between;
+}
+/* FIM COMUNIDADE */
 
 
 /* INDIQUE */ 
@@ -275,7 +301,9 @@ a{
     margin-top: 2em;
     padding: 2em 2em;
 }
-
+span#span_inserido {
+    margin-top: 15px;
+}
 /* FIM INDIQUE */ 
 
 

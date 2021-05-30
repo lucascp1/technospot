@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="css/aplicacao.css">
     <script type="text/javascript" src="funcoes.js"></script>
 </head>
-<body style="background: var(--softblack);">
+<body style="background: var(--softblack);" onload="obterPublicacoes()">
     <!-- Menu Lateral -->
-    <section class="navbar-vertical">
+    <header class="navbar-vertical">
         <!-- Logo Menu -->
         <div class="navbar-logo">
             <img src="svg/short-logo-soft.svg" alt="Logotipo Dragon Fruit">
@@ -21,7 +21,7 @@
             <ul>
                 <a href="comunidade.html" class="nav-link active">
                     <i class="bi bi-speedometer2 nav-links-icon"></i>
-                    <span class="nav-links-name active-span">Listas</span>
+                    <span class="nav-links-name active-span">Músicas</span>
                 </a>
                 <a href="indique.html" class="nav-link">
                     <i class="bi bi-bar-chart-line nav-links-icon"></i>
@@ -33,43 +33,60 @@
                 <span class="nav-links-name">Encerrar</span>
             </a>
         </nav>
-    </section>
+    </header>
     <section class="container-indique">
         <div class="content-indique">
             <h3>Olá, <b id="b_usuario"></b></h3>
             <form id="form_publicar" method="post" onsubmit="return publicar()">
                 <div class="inputs-form">
                     <label for="">Nome do artista:</label>
-                    <input id="ipt_usuario_login" name="nomeArtista" class="inputs-template input-login" type="text"
+                    <input id="ipt_nome_artista" name="nomeArtista" class="inputs-template input-login" type="text"
                         placeholder="Digite o nome">
                 </div>
                 <div class="inputs-form">
                     <label for="">Nome da música:</label>
-                    <input id="ipt_senha_login" name="nomeMusica" class="inputs-template input-login" type="text"
+                    <input id="ipt_nome_musica" name="nomeMusica" class="inputs-template input-login" type="text"
                         placeholder="Digite a música">
                 </div>
                 <div class="div-btn">
-                    <span class="span-btn"><a
-                            href="cadastro.html"></a></span>
-                    <button id="btn_publicar" class="btn2 btn-login">Enviar</button>
+                    <button id="btn_publicar" class="btn2 btn-login" onclick="enviar()" type="button">Enviar</button>
+                    <span id="span_inserido" class="span-inserido"></span>
                 </div>
             </form>
         </div>
+
     </section>
 </body>
 </html>
 
 <script>
+    function enviar(){
+        var nome_artista = ipt_nome_artista.value;
+        var nome_musica = ipt_nome_musica.value;
+
+        if(nome_artista.length >=2 && nome_artista.length >=2){
+            publicar();
+            span_inserido.innerHTML = 'Música indicada com sucesso!';
+            span_inserido.style.color = 'var(--green)';
+        } else {
+            span_inserido.innerHTML = 'Preencha os campos corretamente!';
+            span_inserido.style.color = 'red';
+        }
+    }
+
     function publicar() {
         console.log("entrei!")
         var formulario = new URLSearchParams(new FormData(form_publicar));
         var idUsuario = sessionStorage.id_usuario_meuapp;
+ 
         fetch(`/publicacoes/publicar/${idUsuario}`, {
             method: "POST",
             body: formulario
         }).then(resposta => {
 
             if (resposta.ok) {
+                ipt_nome_artista.value = '';
+                ipt_nome_musica.value = '';
                 obterPublicacoes();
             } else {
                 console.log('Erro ao publicar!');
@@ -82,6 +99,33 @@
         return false;
     }
 
+    function atualizarFeed(teste) {
+        var feed = document.getElementById("feed_container");
+        feed.innerHTML = "";
+
+        for (let i = 0; i < teste.length; i++) {
+            console.log('teste');
+            var publicacao = teste[i];
+            
+            var divPublicacao = document.createElement("div")
+            var divNome = document.createElement("div")
+            var divDescricao = document.createElement("div")
+
+            divNome.innerHTML = `${publicacao.nome}:`;
+            divDescricao.innerHTML += publicacao.nomeArtista;
+            divDescricao.innerHTML += publicacao.nomeMusica;
+
+            divPublicacao.className = "publicacao"
+            divNome.className = "nome";
+            divDescricao.className = "nomeArtista";
+            divDescricao.className = "nomeMusica";
+
+            divPublicacao.appendChild(divNome);
+            divPublicacao.appendChild(divDescricao);
+
+            feed.appendChild(divPublicacao);
+        }
+    }
 
     function obterPublicacoes() {
         fetch("/publicacoes")
@@ -89,10 +133,13 @@
             if (resposta.ok) {
                 resposta.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                   
+                    atualizarFeed(resposta);
 
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
+                finalizarAguardar("Nenhum resultado encontrado ou erro na API");
             }
         })
         .catch(function (error) {
@@ -100,22 +147,6 @@
         });
     }
 
-    function obterPublicacoesPorUsuario(idUsuario) {
-        fetch(`/publicacoes/${idUsuario}`)
-        .then(resposta => {
-            if (resposta.ok) {
-                resposta.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    // alert(JSON.stringify(resposta))
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-        .catch(function (error) {
-            console.error(`Erro na obtenção das publicações do usuário: ${error.message}`);
-        });
-    }
 
     verificar_autenticacao();
 </script>

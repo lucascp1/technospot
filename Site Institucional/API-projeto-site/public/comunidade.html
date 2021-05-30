@@ -8,11 +8,12 @@
     <title>Comunidade | Techno Spot | Inc</title>
     <link rel="shortcut icon" href="svg/shortcut-logo.svg" type="image/x-icon">
     <link rel="stylesheet" href="css/aplicacao.css">
+    <script type="text/javascript" src="funcoes.js"></script>
 </head>
 
-<body style="background: var(--softblack);">
+<body style="background: var(--softblack);" onload="obterPublicacoes()">
     <!-- Menu Lateral -->
-    <section class="navbar-vertical">
+    <header class="navbar-vertical">
         <!-- Logo Menu -->
         <div class="navbar-logo">
             <img src="svg/short-logo-soft.svg" alt="Logotipo Dragon Fruit">
@@ -22,7 +23,7 @@
             <ul>
                 <a href="comunidade.html" class="nav-link active">
                     <i class="bi bi-speedometer2 nav-links-icon"></i>
-                    <span class="nav-links-name active-span">Listas</span>
+                    <span class="nav-links-name active-span">Músicas</span>
                 </a>
                 <a href="indique.html" class="nav-link">
                     <i class="bi bi-bar-chart-line nav-links-icon"></i>
@@ -34,34 +35,125 @@
                 <span class="nav-links-name">Encerrar</span>
             </a>
         </nav>
-    </section>
+    </header>
     <section class="container-comunidade">
-        <div>
-            <input class="inputs-template input-comunidade" type="text" placeholder="Pesquise uma música">
+        <div class="content-select">
+            <select onchange="ordenar()" name="" id="select_ordenar" name="select_ordenar">
+                <option value="">ORDENAR POR:</option>
+                <option value="1">RECENTES</option>
+                <option value="2">MAIS INDICADAS</option>
+            </select>
+            <h3 class="nome-comunidade">Olá, <b id="b_usuario"></b></h3>
         </div>
-        <div class="content-comunidade">
-            <div class="div-musicas bd-white first-div">
-                <span>Solomun - Somebody's Story<span class="teste">| Indicado por: Lucas Castrillo </span></span>
-            </div>
-            <div class="div-musicas bd-green">
-                <span>Solomun - Somebody's Story                                     |                                      Indicado por: Lucas</span>
-            </div>
-            <div class="div-musicas bd-white">
-                <span>Solomun - Somebody's Story</span>
-            </div>
-            <div class="div-musicas bd-green">
-                <span>Solomun - Somebody's Story</span>
-            </div>
-            <div class="div-musicas bd-white">
-                <span>Solomun - Somebody's Story</span>
-            </div>
-            <div class="div-musicas bd-green">
-                <span>Solomun - Somebody's Story</span>
-            </div>
-            <div class="div-musicas bd-white">
-                <span>Solomun - Somebody's Story</span>
+        <div id="feed_container" class="content-comunidade">
+            <div class="feed">
+                <h1>Publicações</h1>
+                <div id="feed_container" class="div-musicas bd-green">
+                </div>
             </div>
     </section>
 </body>
-
 </html>
+
+<script>
+    function ordenar() {
+        var sel_ordenar = select_ordenar.value;
+
+        if (sel_ordenar == 1) {
+            obterPublicacoes();
+
+        } else if (sel_ordenar == 2) {
+            obterPublicacoesAgrupado();
+        }
+    }
+
+    function obterPublicacoes() {
+        fetch("/publicacoes")
+            .then(resposta => {
+                if (resposta.ok) {
+                    resposta.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                        atualizarFeed(resposta);
+
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                    finalizarAguardar("Nenhum resultado encontrado ou erro na API");
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção das publicações: ${error.message}`);
+            });
+    }
+
+    function atualizarFeed(publicacoes) {
+        var feed = document.getElementById("feed_container");
+        feed.innerHTML = "";
+
+        for (let i = 0; i < publicacoes.length; i++) {
+            console.log('publicacoes');
+            var publicacao = publicacoes[i];
+
+            var divPublicacao = document.createElement("div")
+            var divNome = document.createElement("div")
+            var divDescricao = document.createElement("div")
+
+            divNome.innerHTML = ` ${publicacao.nomeArtista} - ${publicacao.nomeMusica} <span class="teste"> | Indicado por: ${publicacao.nome} ${publicacao.sobrenome}</span>`;
+
+            divPublicacao.className = "publicacao"
+            divNome.className = "nome";
+
+            divPublicacao.appendChild(divNome);
+            divPublicacao.appendChild(divDescricao);
+
+            feed.appendChild(divPublicacao);
+        }
+    }
+
+    function obterPublicacoesAgrupado() {
+        fetch("/publicacoes/agrupado")
+            .then(resposta => {
+                if (resposta.ok) {
+                    resposta.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                        atualizarFeedAgrupado(resposta);
+
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                    finalizarAguardar("Nenhum resultado encontrado ou erro na API");
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção das publicações: ${error.message}`);
+            });
+    }
+
+    function atualizarFeedAgrupado(publicacoes) {
+        var feed = document.getElementById("feed_container");
+        feed.innerHTML = "";
+
+        for (let i = 0; i < publicacoes.length; i++) {
+            console.log('publicacoes');
+            var publicacao = publicacoes[i];
+
+            var divPublicacao = document.createElement("div")
+            var divNome = document.createElement("div")
+            var divDescricao = document.createElement("div")
+
+            divNome.innerHTML = ` ${publicacao.nomeArtista} - ${publicacao.nomeMusica} <span class="teste"> | Indicado por: ${publicacao.qtdMusica} pessoa(s)</span>`;
+
+            divPublicacao.className = "publicacao"
+            divNome.className = "nome";
+
+            divPublicacao.appendChild(divNome);
+            divPublicacao.appendChild(divDescricao);
+
+            feed.appendChild(divPublicacao);
+        }
+    }
+
+    verificar_autenticacao();
+</script>

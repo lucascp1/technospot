@@ -54,6 +54,18 @@ CREATE TABLE tbSuporte (
 ) AUTO_INCREMENT = 3000;
 
 
+CREATE TABLE tbContatos (
+  idContato INT AUTO_INCREMENT,
+  nomeContato VARCHAR(45),
+  emailContato VARCHAR(45),
+  telefoneContato VARCHAR(45),
+  mensagem TEXT,
+  fkColaboradorContato INT,
+  PRIMARY KEY (idContato)
+) AUTO_INCREMENT = 4000;
+
+
+
 SELECT 
 tbUsuarios.nome, 
 tbUsuarios.sobrenome, 
