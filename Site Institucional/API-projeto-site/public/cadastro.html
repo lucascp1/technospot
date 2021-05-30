@@ -19,56 +19,138 @@
                 <a href="index.html"><img src="svg/short-logo-soft.svg" alt=""></a>
             </figure>
             <form id="form_cadastro" method="post" onsubmit="return cadastrar()">
-            <section class="container-cadastro-input">
-                <div class="container-input">
-                    <div class="inputs-form">
-                        <label for="">Nome:</label>
-                        <input id="ipt_name_register" name="nome" class="inputs-template input-nome" type="text" placeholder="Fulano">
+                <section class="container-cadastro-input">
+                    <div class="container-input">
+                        <div class="inputs-form">
+                            <label for="">Nome:</label>
+                            <input onkeyup="validacao_nome_cadastro()" id="ipt_name_register" name="nome"
+                                class="inputs-template input-nome" type="text" placeholder="Fulano">
+                        </div>
+                        <div class="inputs-form">
+                            <label for="">Sobrenome:</label>
+                            <input onkeyup="validacao_sobrenome_cadastro()" id="ipt_lastname_register" name="sobrenome"
+                                class="inputs-template input-nome" type="text" placeholder="Silva">
+                        </div>
                     </div>
-                    <div class="inputs-form">
-                        <label for="">Sobrenome:</label>
-                        <input id="ipt_lastname_register" name="sobrenome" class="inputs-template input-nome" type="text" placeholder="Silva">
-                    </div>
-                </div>
 
-                <div class="div-cadastro-bottom">
-                    <div class="inputs-form">
-                        <label for="">E-mail:</label>
-                        <input id="ipt_email_register" name="email" class="inputs-template" type="text" placeholder="Digite seu e-mail">
+                    <div class="div-cadastro-bottom">
+                        <div class="inputs-form">
+                            <label for="">E-mail:</label>
+                            <input onkeyup="validacao_email_cadastro()" id="ipt_email_register" name="email"
+                                class="inputs-template" type="text" placeholder="Digite seu e-mail">
+                        </div>
+                        <div class="inputs-form">
+                            <label for="">Login:</label>
+                            <input onkeyup="validacao_login_cadastro()" id="ipt_usuario_register" name="login"
+                                class="inputs-template" type="text" placeholder="Digite seu login">
+                        </div>
+                        <div class="inputs-form">
+                            <label for="">Senha:</label>
+                            <input onkeyup="validacao_senha_cadastro()" id="ipt_senha_register" name="senha"
+                                class="inputs-template" type="password" placeholder="Digite sua senha">
+                        </div>
                     </div>
-                    <div class="inputs-form">
-                        <label for="">Login:</label>
-                        <input id="ipt_usuario_register" name="login" class="inputs-template" type="text" placeholder="Digite seu login">
-                    </div>
-                    <div class="inputs-form">
-                        <label for="">Senha:</label>
-                        <input id="ipt_senha_register" name="senha" class="inputs-template" type="text" placeholder="Digite sua senha">
-                    </div>
+                </section>
+                <div class="div-btn">
+                    <span class="span-btn">Já é registrado? <a href="login.html"><b>Entrar</b></a></span>
+                    <button onclick="btncadastrar()" id="btn_entrar" class="btn2 btn-registrar" type="button">Registrar</button>
+                    <span class="span_msg" id="span_msg"></span>
                 </div>
-            </section>
-            <div class="div-btn">
-                <span class="span-btn">Já é registrado? <a href="login.html"><b>Entrar</b></a></span>
-                <button id="btn_entrar" class="btn2 btn-registrar" type="submit">Registrar</button>
-            </div>
-        </form>
+            </form>
         </section>
     </section>
 </body>
 </html>
 
 <script>
+
+    var nomeSobrenomeReg = /^[a-zA-Z ]{3,}$/;
+    var emailReg = /^([A-z0-9._-]+@[a-z0-9._-]+\.[A-z0-9_-]+)$/;
+    var loginReg = /^(?=.*[0-9]{3})(?=.*[A-Z]{1})(?=.*[a-z]{1})[a-zA-Z0-9]{6,}$/;
+    var senhaReg = /^(?=.*[0-9]{3})(?=.*[A-Z]{1})(?=.*[a-z]{1})[a-zA-Z0-9]{6,}$/;
+
+    function validacao_nome_cadastro() {
+
+        var ipt_nome = ipt_name_register.value;
+
+        if (ipt_nome.match(nomeSobrenomeReg)) {
+            ipt_name_register.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_name_register.style.border = '1.5px solid red';
+        }
+    }
+
+    function validacao_sobrenome_cadastro() {
+
+        var ipt_sobrenome = ipt_lastname_register.value;
+
+        if (ipt_sobrenome.match(nomeSobrenomeReg)) {
+            ipt_lastname_register.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_lastname_register.style.border = '1.5px solid red';
+        }
+    }
+
+
+    function validacao_email_cadastro() {
+
+        var ipt_email = ipt_email_register.value;
+
+        if (ipt_email.match(emailReg)) {
+            ipt_email_register.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_email_register.style.border = '1.5px solid red';
+        }
+    }
+
+    function validacao_login_cadastro() {
+
+        var ipt_login = ipt_usuario_register.value;
+
+        if (ipt_login.match(loginReg)) {
+            ipt_usuario_register.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_usuario_register.style.border = '1.5px solid red';
+        }
+    }
+
+    function validacao_senha_cadastro() {
+
+        var ipt_senha = ipt_senha_register.value;
+
+        if (ipt_senha.match(senhaReg)) {
+            ipt_senha_register.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_senha_register.style.border = '1.5px solid red';
+        }
+    }
+
+    function btncadastrar(){
+        var ipt_nome = ipt_name_register.value;
+        var ipt_sobrenome = ipt_lastname_register.value;
+        var ipt_email = ipt_email_register.value;
+        var ipt_login = ipt_usuario_register.value;
+        var ipt_senha = ipt_senha_register.value;
+
+        if(ipt_nome.match(nomeSobrenomeReg) && ipt_sobrenome.match(nomeSobrenomeReg) && ipt_email.match(emailReg) && ipt_login.match(loginReg) && ipt_senha.match(senhaReg)){
+            cadastrar();
+        } else{
+            span_msg.innerHTML = "Verifique os campos!";
+        }
+    }
+
     // FUNCÃO CADASTRAR API 
 
-function cadastrar() {
+    function cadastrar() {
         var formulario = new URLSearchParams(new FormData(form_cadastro));
         fetch("/usuarios/cadastrar", {
             method: "POST",
             body: formulario
         }).then(function (response) {
-            
+
             if (response.ok) {
 
-                window.location.href='login.html';
+                window.location.href = 'login.html';
 
             } else {
                 console.log('Erro de cadastro!');

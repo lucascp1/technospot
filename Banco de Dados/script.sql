@@ -7,7 +7,7 @@ CREATE TABLE tbUsuarios (
   nome varchar(25),
   sobrenome varchar(25),
   email varchar(45),
-  login varchar(20),
+  login varchar(20) UNIQUE KEY,
   senha varchar(20),
   PRIMARY KEY (idUsuario)
 );

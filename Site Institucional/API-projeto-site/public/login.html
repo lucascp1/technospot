@@ -20,18 +20,19 @@
                 <form id="form_login" method="post" onsubmit="return entrar()">
                     <div class="inputs-form">
                         <label for="">Login:</label>
-                        <input id="ipt_usuario_login" name="login" class="inputs-template input-login" type="text"
+                        <input onkeyup="validacao_login_login()" id="ipt_usuario_login" name="login" class="inputs-template input-login" type="text"
                             placeholder="Digite seu login">
                     </div>
                     <div class="inputs-form">
                         <label for="">Senha: <span class="">Esqueceu sua senha?</span></label>
-                        <input id="ipt_senha_login" name="senha" class="inputs-template input-login" type="text"
+                        <input onkeyup="validacao_senha_login()" id="ipt_senha_login" name="senha" class="inputs-template input-login" type="password"
                             placeholder="Digite sua senha">
                     </div>
                     <div class="div-btn">
                         <span class="span-btn">Não possuí registro? <a
                                 href="cadastro.html"><b>Cadastre-se</b></a></span>
                         <button id="btn_entrar" class="btn2 btn-login">Entrar</button>
+                        <span class="span_msg" id="span_msg"></span>
                     </div>
                 </form>
             </div>
@@ -42,6 +43,31 @@
 </html>
 
 <script>
+    var loginReg = /^(?=.*[0-9]{3})(?=.*[A-Z]{1})(?=.*[a-z]{1})[a-zA-Z0-9]{6,}$/;
+    var senhaReg = /^(?=.*[0-9]{3})(?=.*[A-Z]{1})(?=.*[a-z]{1})[a-zA-Z0-9]{6,}$/;
+
+    function validacao_login_login() {
+
+        var ipt_login = ipt_usuario_login.value;
+
+        if (ipt_login.match(loginReg)) {
+            ipt_usuario_login.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_usuario_login.style.border = '1.5px solid red';
+        }
+    }
+
+    function validacao_senha_login() {
+
+        var ipt_senha = ipt_senha_login.value;
+
+        if (ipt_senha.match(senhaReg)) {
+            ipt_senha_login.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_senha_login.style.border = '1.5px solid red';
+        }
+    }
+
     // FUNCÃO ENTRAR API 
 
     function entrar() {
@@ -58,12 +84,12 @@
                     sessionStorage.login_usuario_meuapp = json.login;
                     sessionStorage.nome_usuario_meuapp = json.nome;
                     sessionStorage.id_usuario_meuapp = json.idUsuario;
-                    
+
                     window.location.href = 'comunidade.html';
                 });
 
             } else {
-                console.log('Erro de login!');
+                span_msg.innerHTML = "Verifique os campos!";
             }
         });
         return false;

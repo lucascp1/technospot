@@ -16,20 +16,6 @@
     <!-- Header -->
     <header class="header-nav">
         <nav class="nav">
-            <!-- Hamburguer Menu Mobile -->
-            <!--             <div class="open-menu-icon" id="open_menu_icon" onclick="open_itens_menu()">
-                <svg fill="#FFF" viewBox="0 0 512 512" width="1em" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z" />
-                </svg>
-            </div> -->
-            <!-- Fechar Menu Mobile -->
-            <!--             <div class="close-menu-icon" id="close_menu_icon" onclick="close_itens_menu()">
-                <svg fill="#FFF" viewBox="0 0 512 512" width="1em" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z" />
-                </svg>
-            </div> -->
-            <!-- Fim Hamburguer Menu Mobile -->
-
             <!-- Logo Menu -->
             <div class="nav-logo">
                 <a href="index.html"><img src="svg/logo.svg" alt="Logo"></a>
@@ -55,29 +41,36 @@
             <div>
                 <h1>CONT<span class="border-h1-bottom">ATO</span></h1>
             </div>
-                <form class="inputs-contato" id="form_contato" method="post" onsubmit="return contato()"> 
-                    <section>
-                        <div class="inputs-form">
-                            <label for="">Nome completo:</label>
-                            <input class="inputs-template input-nome"  name="nomeContato"type="text" placeholder="Fulano Silva">
-                        </div>
-                        <div class="inputs-form">
-                            <label for="">E-mail:</label>
-                            <input class="inputs-template input-nome" name="emailContato" type="text" placeholder="Digite seu e-mail">
-                        </div>
-                        <div class="inputs-form">
-                            <label for="">Telefone:</label>
-                            <input class="inputs-template input-nome" name="telefoneContato" type="text" placeholder="Digite seu telefone">
-                        </div>
-                        <div class="div-but">
-                            <button class="btn btn-form" type="submit">ENVIAR</button>
-                        </div>
-                    </section>
+            <form class="inputs-contato" id="form_contato" method="post" onsubmit="return contato()">
+                <section>
                     <div class="inputs-form">
-                        <label for="">Mensagem:</label>
-                        <textarea id="" cols="30" rows="10" name="mensagem" ></textarea>
+                        <label for="">Nome completo:</label>
+                        <input onkeyup="validacao_nome_contato()" id="ipt_nome_contato"
+                            class="inputs-template input-nome" name="nomeContato" type="text"
+                            placeholder="Fulano Silva">
                     </div>
-             </form> 
+                    <div class="inputs-form">
+                        <label for="">E-mail:</label>
+                        <input onkeyup="validacao_email_contato()" id="ipt_email_contato"
+                            class="inputs-template input-nome" name="emailContato" type="text"
+                            placeholder="Digite seu e-mail">
+                    </div>
+                    <div class="inputs-form">
+                        <label for="">Telefone:</label>
+                        <input onkeyup="validacao_telefone_contato()" id="ipt_telefone_contato"
+                            class="inputs-template input-nome" name="telefoneContato" type="text"
+                            placeholder="Digite seu telefone">
+                    </div>
+                    <div class="div-but">
+                        <button onclick="enviar()" class="btn btn-form" type="button">ENVIAR</button>
+                        <span class="span_msg" id="span_msg"></span>
+                    </div>
+                </section>
+                <div class="inputs-form">
+                    <label for="">Mensagem:</label>
+                    <textarea id="ipt_mensagem_contato" cols="30" rows="10" name="mensagem" placeholder="Digite sua mensagem"></textarea>
+                </div>
+            </form>
         </section>
     </section>
     <footer class="footer">
@@ -85,10 +78,9 @@
             <!-- Texto Rodapé -->
             <article class="footer-about">
                 <a href="index.html"><img src="svg/logo.svg" alt="Logo"></a>
-                <p>Fundada com o intuito de
-                    difundirmos a tecnologia em todos os
-                    meios possíveis enquanto auxiliamos um
-                    setor tão importante para o Brasil</p>
+                <p>Fundada com o intuito de difundir o Techno e
+a música eletrônica em geral, para pessoas 
+que já conhecem ou querem conhecer.</p>
             </article>
             <!-- Fim Rodapé -->
             <!-- Itens Rodapé -->
@@ -107,9 +99,6 @@
                 </ul>
             </div>
             <!-- Fim Itens Rodapé -->
-            <div class="nav-btn" href="#">
-                <a class="btn btn-nav" href="login.html">SUBSTITUIR</a>
-            </div>
         </div>
         <!-- Texto Copyright -->
         <div class="copyright">
@@ -125,16 +114,87 @@
 <script>
     // FUNCÃO CONTATO API 
 
-function contato() {
+    var nomeSobrenomeReg = /^[a-zA-Z ]{3,}$/;
+    var emailReg = /^([A-z0-9._-]+@[a-z0-9._-]+\.[A-z0-9_-]+)$/;
+    var telefoneReg = /^[(]?[0-9]{2,3}[)]?[0-9]{4,5}\-?[0-9]{4}$/;
+    var mensagemReg = /^.{3,500}$/;
+
+
+    function validacao_nome_contato() {
+
+        var ipt_nome = ipt_nome_contato.value;
+
+        if (ipt_nome.match(nomeSobrenomeReg)) {
+            ipt_nome_contato.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_nome_contato.style.border = '1.5px solid red';
+        }
+    }
+
+    function validacao_email_contato() {
+
+        var ipt_email = ipt_email_contato.value;
+
+        if (ipt_email.match(emailReg)) {
+            ipt_email_contato.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_email_contato.style.border = '1.5px solid red';
+        }
+    }
+
+    function validacao_telefone_contato() {
+
+        var ipt_telefone = ipt_telefone_contato.value;
+
+        if (ipt_telefone.match(telefoneReg)) {
+            ipt_telefone_contato.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_telefone_contato.style.border = '1.5px solid red';
+        }
+    }
+
+    function validacao_mensagem_contato() {
+
+        var ipt_mensagem = ipt_mensagem_contato.value;
+
+        if (ipt_telefone.match(telefoneReg)) {
+            ipt_mensagem_contato.style.border = '1.5px solid var(--green)';
+        } else {
+            ipt_mensagem_contato.style.border = '1.5px solid red';
+        }
+    }
+
+    function enviar() {
+
+        var ipt_nome = ipt_nome_contato.value;
+        var ipt_email = ipt_email_contato.value;
+        var ipt_telefone = ipt_telefone_contato.value;
+        var ipt_mensagem = ipt_mensagem_contato.value;
+
+        if (ipt_nome.match(nomeSobrenomeReg) && ipt_email.match(emailReg) && ipt_telefone.match(telefoneReg) &&  ipt_mensagem.match(mensagemReg)) {
+            contato();
+        } else {
+            span_msg.innerHTML = "Verifique os campos";
+        }
+    }
+
+
+    function contato() {
         var formulario_contato = new URLSearchParams(new FormData(form_contato));
         fetch("/usuarios/contato", {
             method: "POST",
             body: formulario_contato
         }).then(function (response) {
-            
+
             if (response.ok) {
 
-                alert('Teste');
+            span_msg.innerHTML = "Mensagem enviada com sucesso";
+            span_msg.style.color = 'var(--green)';
+            
+            ipt_nome_contato.value = '';
+            ipt_email_contato.value = ''; 
+            ipt_telefone_contato.value = '';
+            ipt_mensagem_contato.value = '';
 
             } else {
                 console.log('Erro de cadastro!');

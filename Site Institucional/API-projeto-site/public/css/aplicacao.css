@@ -31,7 +31,7 @@
     letter-spacing: 0.5px;
 }
 .inputs-form{
-    padding: 1em 0;
+    padding: 1em 1em 1em 1em;
 }
 .inputs-form label{
     font-weight: 600;
@@ -197,19 +197,27 @@ a{
 .container-input{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 2em;
+    grid-gap: 3em;
 }
 .input-nome{
-    padding: 1em 3em 1em 2.4em;
+    padding: 1em 3em 1em 1em;
 }
 .div-cadastro-bottom input{
-    padding: 1em 23.9em 1em 2.4em;
+    padding: 1em 23.9em 1em 1em;
 }
 .btn-registrar{
     font-weight: 600;
     letter-spacing: 1.5px;
     padding: 17px 80px;
     font-size: 1.1em;
+}
+
+.span_msg{
+    font-size: 18px;
+    color: red;
+    padding-top: 1em;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
 }
 /* FIM CADASTRO */
 
@@ -284,9 +292,10 @@ select{
 .container-indique{
     display: flex;
     flex-direction: column;
-    padding: 5em 0 0 20em;
+    padding: 0em 0em 0em 20em;
     justify-content: center;
     align-items: center;
+    height: 90vh;
 }
 .content-indique{
     display: flex;
@@ -295,10 +304,8 @@ select{
     align-items: center;
     background-color: var(--softblack);
     height: 500px;
-    width: 60%;
     border: 2px solid var(--green);
     border-radius: 30px;
-    margin-top: 2em;
     padding: 2em 2em;
 }
 span#span_inserido {
